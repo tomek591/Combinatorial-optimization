@@ -1,11 +1,14 @@
 package com.company;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         int saturation = 50; // percent of saturation in graph
         int numberOfVertex = 8;
@@ -20,6 +23,7 @@ public class Main {
 
         displayMatrix(adjacencyMatrix);
 
+        generateFileWithGraph(adjacencyMatrix, numberOfVertex);
     }
 
     public static void fillMatrix(int[][] adjacencyMatrix) {
@@ -75,6 +79,29 @@ public class Main {
 
         System.out.println("Number of edges in the graph: " + edgesCounter);
         System.out.println("Number of tries to do an edge: " + triesNumber);
+
+    }
+
+    public static void generateFileWithGraph(int[][] adjacencyMatrix, int numberOfVertex) throws IOException {
+
+        FileWriter fileWriter = new FileWriter("graph.txt");
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+
+        printWriter.println(numberOfVertex);
+
+        for (int i = 0; i < numberOfVertex - 1; i++) {
+
+            for (int j = i + 1; j < numberOfVertex; j++) {
+
+                if (adjacencyMatrix[i][j] == 1) {
+
+                    printWriter.println((i + 1) + " " + (j + 1));  // indexing from one is required
+
+                }
+            }
+        }
+
+        printWriter.close();
 
     }
 }
