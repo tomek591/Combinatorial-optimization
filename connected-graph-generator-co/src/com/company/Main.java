@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
 
@@ -13,6 +14,12 @@ public class Main {
 
         fillMatrix(adjacencyMatrix);
 
+        doConnection(adjacencyMatrix);
+
+        doSaturation(adjacencyMatrix, numberOfVertex, numberOfEdges);
+
+        displayMatrix(adjacencyMatrix);
+
     }
 
     public static void fillMatrix(int[][] adjacencyMatrix) {
@@ -22,5 +29,52 @@ public class Main {
             Arrays.fill(matrix, 0);
 
         }
+    }
+
+    public static void displayMatrix(int[][] adjacencyMatrix) {
+
+        for (int[] matrix : adjacencyMatrix) {
+
+            System.out.println(Arrays.toString(matrix));
+
+        }
+    }
+
+    public static void doConnection(int[][] adjacencyMatrix) {
+
+        for (int i = 0; i < adjacencyMatrix.length - 1; i++) {
+
+            adjacencyMatrix[i][i + 1] = 1;
+            adjacencyMatrix[i + 1][i] = 1;
+
+        }
+    }
+
+    public static void doSaturation(int[][] adjacencyMatrix, int numberOfVertex, float numberOfEdges) {
+
+        int edgesCounter = numberOfVertex - 1;
+        int triesNumber = 0;
+
+        while (numberOfEdges > edgesCounter) {
+
+            triesNumber++;
+
+            int vertex1 = ThreadLocalRandom.current().nextInt(0, numberOfVertex);
+            int vertex2 = ThreadLocalRandom.current().nextInt(0, numberOfVertex);
+
+            if (vertex1 == vertex2) continue; // if vertex tries to do edge to itself
+
+            if (adjacencyMatrix[vertex1][vertex2] == 1) continue; // if edge already is
+
+            adjacencyMatrix[vertex1][vertex2] = 1;
+            adjacencyMatrix[vertex2][vertex1] = 1;
+
+            edgesCounter++;
+
+        }
+
+        System.out.println("Number of edges in the graph: " + edgesCounter);
+        System.out.println("Number of tries to do an edge: " + triesNumber);
+
     }
 }
