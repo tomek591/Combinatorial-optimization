@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         int saturation = 50; // percent of saturation in graph
-        int numberOfVertex = 12;
+        int numberOfVertex = 8;
         float numberOfEdges = (numberOfVertex * (numberOfVertex - 1)) / (2 * (100 / (float) saturation));
         int[][] adjacencyMatrix = new int[numberOfVertex][numberOfVertex];
 
